@@ -1,0 +1,38 @@
+/* styles/commandPalette.css */
+
+.kbar-positioner {
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+}
+
+.kbar-search {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.25rem;
+    border: none;
+    background: #fff;
+    border-radius: 8px;
+    outline: none;
+}
+
+.kbar-result {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.kbar-result.active {
+    background-color: #4caf50;
+    color: #fff;
+    border-radius: 8px;
+}
+
+.kbar-animator {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+    background: #2e2e2e;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
