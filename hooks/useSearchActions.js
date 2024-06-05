@@ -35,57 +35,12 @@ const teams = [
     { id: '30', name: 'Giants' },
 ];
 
-const details = [
-    { id: 'team-page', name: 'Team Page' },
-    { id: 'roster-resource', name: 'Roster Resource' },
-    { id: 'team-leaders', name: 'Team Leaders' },
-];
-
-const parameters = [
-    {
-        id: 'timeframe-last7',
-        name: 'Last 7 Days',
-        key: 'timeframe',
-        value: 'last7',
-    },
-    {
-        id: 'timeframe-last14',
-        name: 'Last 14 Days',
-        key: 'timeframe',
-        value: 'last14',
-    },
-    {
-        id: 'timeframe-last30',
-        name: 'Last 30 Days',
-        key: 'timeframe',
-        value: 'last30',
-    },
-    {
-        id: 'timeframe-season',
-        name: 'Season',
-        key: 'timeframe',
-        value: 'season',
-    },
-    { id: 'stat-homeruns', name: 'Home Runs', key: 'stat', value: 'homeruns' },
-    { id: 'stat-rbi', name: 'RBI', key: 'stat', value: 'rbi' },
-    // Add more parameters
-];
-
 export default function useSearchActions() {
     const [selectedTeam, setSelectedTeam] = useState('');
-    const [selectedParameters, setSelectedParameters] = useState({});
     const [actions, setActions] = useState([]);
 
     const setTeam = team => {
         setSelectedTeam(team);
-        setSelectedParameters({}); // Reset parameters when a new team is selected
-    };
-
-    const addParameter = (key, value) => {
-        setSelectedParameters(prev => {
-            const newParameters = { ...prev, [key]: value };
-            return newParameters;
-        });
     };
 
     const storePastSearch = url => {
@@ -99,41 +54,40 @@ export default function useSearchActions() {
         localStorage.setItem('pastSearches', JSON.stringify(pastSearches));
     };
 
-    const viewPastSearches = () => {
-        const pastSearches = JSON.parse(
-            localStorage.getItem('pastSearches') || '[]'
-        );
-        pastSearches.forEach(search =>
-            console.log(`Past Search: ${search.url}`)
-        );
-    };
-
     useEffect(() => {
         const baseActions = [
             {
-                id: 'search-teams',
-                name: 'Teams (T)',
-                keywords: 'teams',
-                perform: () => console.log('Teams selected...'),
+                id: 'teams',
+                name: 'Teams',
+                shortcut: ['t'],
+                section: 'Navigation',
+                perform: () => {}, // No navigation here
+            },
+            {
+                id: 'players',
+                name: 'Players',
+                shortcut: ['p'],
+                section: 'Navigation',
+                perform: () => setTeam('Players'),
+            },
+            {
+                id: 'leaders',
+                name: 'Leaders',
+                shortcut: ['l'],
+                section: 'Navigation',
+                perform: () => setTeam('Leaders'),
             },
         ];
 
         const teamActions = teams.map(team => ({
             id: `team-${team.name}`,
             name: team.name,
-            parent: 'search-teams',
+            parent: 'teams',
             perform: () => setTeam(team.name),
         }));
 
-        const detailActions = details.map(detail => ({
-            id: `detail-${detail.id}`,
-            name: detail.name,
-            parent: selectedTeam ? `team-${selectedTeam}` : '',
-            perform: () => console.log(`${detail.name} selected`),
-        }));
+        setActions([...baseActions, ...teamActions]);
+    }, []);
 
-        setActions([...baseActions, ...teamActions, ...detailActions]);
-    }, [selectedTeam]);
-
-    return { actions, selectedTeam, selectedParameters, storePastSearch };
+    return { actions, selectedTeam, storePastSearch, setTeam };
 }
