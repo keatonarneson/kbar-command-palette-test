@@ -15,6 +15,14 @@ export default function HomePage() {
                     Command Palette Example using kbar
                 </a>
             </h1>
+            <h2 className="text font-bold mb-4">
+                <a
+                    href="https://kbar.vercel.app/docs/overview"
+                    className="text-black-600 hover:underline"
+                >
+                    kbar Documentation
+                </a>
+            </h2>
             <p className="text-lg mb-4">
                 Use the command palette to search for teams and apply filters by
                 using <strong>CTRL-K</strong>.

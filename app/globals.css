@@ -5,3 +5,18 @@
 body {
     @apply font-sans m-0 p-0 box-border;
 }
+
+/* Hover state for navigation items */
+.kbar-container .navigation-item:hover {
+    @apply bg-gray-100;
+}
+
+/* Focus state for navigation items (keyboard navigation) */
+.kbar-container .navigation-item[aria-selected='true'] {
+    @apply bg-gray-100;
+}
+
+/* Hover state for past search items */
+.kbar-container .past-search-item:hover {
+    @apply bg-gray-200;
+}
